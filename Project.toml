@@ -1,10 +1,11 @@
 name = "MatrixProductStates"
 uuid = "28892423-5e71-5a24-babc-7f7f28a8bceb"
-authors = [ "James Douglas" ]
+authors = ["James Douglas"]
 version = "0.1.0"
 
 [deps]
 LinearMaps = "7a12625a-238d-50fd-b39a-03d52299707e"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 TensorOperations = "6aa20fa7-93e2-5fca-9bc0-fbd0db3c71a2"
 
 [compat]

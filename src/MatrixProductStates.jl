@@ -19,6 +19,7 @@ using LinearMaps
 #using CuArrays
 
 import Base.randn
+using Random
 #import CuArrays.CUSOLVER.qrq!
 
 Base.@irrational SQRT_HALF 0.7071067811865475244008  sqrt(big(0.5))
