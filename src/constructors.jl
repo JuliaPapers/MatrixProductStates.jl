@@ -1,7 +1,6 @@
 """
 make product state MPS in left orthonomal form
 """
-
 mpsproductstate(na, dmax, d, state::Array) = 
     mpsproductstate(Complex{Float64}, Array, na, dmax, d, state)
 
@@ -63,7 +62,6 @@ end
 """
 make groundstate MPS in left orthonomal form (also has trace 1 for density matrix)
 """
-
 mpsgroundstate(na, dmax, d) = mpsgroundstate(Complex{Float64}, Array, na, dmax, d)
 
 function mpsgroundstate(::Type{TN}, ::Type{TA}, na, dmax, d) where {TN, TA}
@@ -107,7 +105,6 @@ end
 """
 make random left orthonormalized MPS
 """
-
 mpsrandom(na, dmax, d) = mpsrandom(Complex{Float64}, Array, na, dmax, d)
 
 function mpsrandom(::Type{TN}, ::Type{TA}, na, dmax, d) where {TN, TA}
@@ -194,7 +191,6 @@ end
 """
 make MPS operator from input matrix
 """
-
 makemps(mpsmat, na, d) = makemps(Complex{Float64}, Array, mpsmat, na, d) 
 
 function makemps(::Type{TN}, ::Type{TA}, mpsmat, na, d) where {TN, TA}
@@ -225,7 +221,6 @@ end
 """
 make MPO operator from input matrix (slow, shouldn't be used in loops)
 """
-
 makempo(mpomat, na, d) = makempo(Complex{Float64}, Array, mpomat, na, d)
 
 function makempo(::Type{TN}, ::Type{TA}, mpomat, na, d) where {TN, TA}
