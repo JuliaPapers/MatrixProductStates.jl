@@ -1,5 +1,6 @@
 using MAT
 using MatrixProductStates
+using LinearAlgebra
 BLAS.set_num_threads(2)
 
 #Spin model parameters

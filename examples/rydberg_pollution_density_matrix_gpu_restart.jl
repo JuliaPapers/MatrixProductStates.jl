@@ -1,6 +1,7 @@
 using MAT
 using CuArrays
 using MatrixProductStates
+using LinearAlgebra
 BLAS.set_num_threads(nworkers())
 
 #Spin model parameters
