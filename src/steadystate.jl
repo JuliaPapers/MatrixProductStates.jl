@@ -5,8 +5,8 @@ canonical form (normalisation not necessary). Matrix as linear map.
 function steady_state_search!(At, L, Lconj, maxsweeps, converge_rat, eigs_tol)
 
     na = length(At)
-    FL = Array{Array{Complex{Float64},4}, 1}(undef, na)
-    FR = Array{Array{Complex{Float64},4}, 1}(undef, na)
+    FL = Vector{Array{Complex{Float64},4}}(undef, na)
+    FR = Vector{Array{Complex{Float64},4}}(undef, na)
     ae = 0.0
     aestart = 0.0
 
@@ -87,8 +87,8 @@ end
 function steady_state_search_two_site!(At, L, Lconj, maxsweeps, converge_rat, eigs_tol, D_lim, svd_tol, Dims)
 
     na = length(At)
-    FL = Array{Array{Complex{Float64},4}, 1}(undef, na)
-    FR = Array{Array{Complex{Float64},4}, 1}(undef, na)
+    FL = Vector{Array{Complex{Float64},4}}(undef, na)
+    FR = Vector{Array{Complex{Float64},4}}(undef, na)
     ae = 0.0
     aestart = 0.0
 

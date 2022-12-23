@@ -236,7 +236,7 @@ end
 # with con = 1 and delt = dt creates the linear time evolution operator 1 - im*dt*H
 function sm_hamiltonian(::Type{TN}, ::Type{TA}, con, delt, time) where {TN,TA}
 
-    H = Array{TA{TN,4}, 1}(undef, na + 1)
+    H = Vector{TA{TN,4}}(undef, na + 1)
 
     drj = diff(rj)
     ph = exp.(im * k_wg * drj)

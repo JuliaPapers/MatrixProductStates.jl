@@ -245,7 +245,7 @@ end
 
 function construct_L_spin_model(::Type{TN}, ::Type{TA}, con, delt, time) where {TN,TA}
 
-    LMPO = Array{TA{TN,4}, 1}(undef, na)
+    LMPO = Vector{TA{TN,4}}(undef, na)
 
     drj = diff(rj)
     ph = exp.(im * k_wg * drj)
@@ -337,7 +337,7 @@ end
 
 function nex_projector(::Type{TN}, ::Type{TA}, na, nex) where {TN,TA}
 
-    P = Array{TA{TN,4}, 1}(undef, na)
+    P = Vector{TA{TN,4}}(undef, na)
     dl = 1
     for n = 1:na
         dr = min(nex, n, na - n) + 1

@@ -18,9 +18,9 @@ canonical form (normalisation not necessary)
 function compress_var(Ain, A, maxsweeps)
 
     na = length(Ain)
-    FL = Array{Array{Complex{Float64},2}, 1}(undef, na)
-    FR = Array{Array{Complex{Float64},2}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Complex{Float64},2}}(undef, na)
+    FR = Vector{Array{Complex{Float64},2}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing left environment
 
@@ -108,9 +108,9 @@ canonical form (normalisation not necessary)
 function compress_var_two_site(Ain, A, maxsweeps, svd_tol, dims, dlim)
 
     na = length(Ain)
-    FL = Array{Array{Complex{Float64},2}, 1}(undef, na)
-    FR = Array{Array{Complex{Float64},2}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Complex{Float64},2}}(undef, na)
+    FR = Vector{Array{Complex{Float64},2}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing left environment
 
@@ -170,9 +170,9 @@ initial guess. Ain must be in left canonical form (normalisation not necessary)
 function compress_var_apply_H(Ain, A, H, maxsweeps)
 
     na = length(Ain)
-    FL = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    FR = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Complex{Float64},3}}(undef, na)
+    FR = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing left environment
 
@@ -258,8 +258,8 @@ end
 function compress_var_apply_H_right(Ain, A, H, maxsweeps)
 
     na = length(Ain)
-    FR = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FR = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing right environment
 
@@ -288,8 +288,8 @@ end
 function compress_var_apply_H_left(Ain, A, H)
 
     na = length(Ain)
-    FL = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing left environment
 
@@ -351,9 +351,9 @@ initial guess. Ain must be in left canonical form (normalisation not necessary)
 function compress_var_apply_H_two_site(Ain, A, H, maxsweeps, svd_tol, dims, dlim)
 
     na = length(Ain)
-    FL = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    FR = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Complex{Float64},3}}(undef, na)
+    FR = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing left environment
 
@@ -409,9 +409,9 @@ end
 function compress_var_apply_H_two_site_left(Ain, A, H, maxsweeps, svd_tol, dims, dlim)
 
     na = length(Ain)
-    FL = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    FR = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Complex{Float64},3}}(undef, na)
+    FR = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing left environment
 
@@ -446,9 +446,9 @@ end
 function compress_var_apply_H_two_site_right(Ain, A, H, maxsweeps, svd_tol, dims, dlim)
 
     na = length(Ain)
-    FL = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    FR = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Complex{Float64},3}}(undef, na)
+    FR = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing right environment
 
@@ -492,21 +492,21 @@ function compress_sum_var(Ain, coef, A, maxsweeps)
 
     na = length(Ain)
     numv = length(coef)
-    FL = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv)
-    FR = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    AR = Array{Array{Complex{Float64},3}, 1}(undef, numv)
+    FL = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv)
+    FR = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
+    AR = Vector{Array{Complex{Float64},3}}(undef, numv)
 
     #initializing left environment
 
     for ll = 1:numv
         #A[ll][na] = coef[ll]*Av[ll][na]
-        FL[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FL[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:(na-1)
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
-        FR[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FR[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FR[ll][na] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 
@@ -569,21 +569,21 @@ function compress_sum_var_two_site(Ain, coef, A, maxsweeps, svd_tol, dims, dlim)
 
     na = length(Ain)
     numv = length(coef)
-    FL = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv)
-    FR = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv)
+    FR = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing left environment
 
     for ll = 1:numv
 
         #A[ll][na] = coef[ll]*Av[ll][na]
-        FL[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FL[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:na-2
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
-        FR[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FR[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FR[ll][na] = coef[ll] * Matrix{Float64}(I, 1, 1)
 
     end
@@ -651,23 +651,23 @@ function compress_sum_var_apply_H(Ain, coef, A, H, maxsweeps)
 
     na = length(Ain)
     numv = length(coef)
-    FL = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    FR = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    FLH = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    FRH = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    AR = Array{Array{Complex{Float64},3}, 1}(undef, numv - 1)
+    FL = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    FR = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    FLH = Vector{Array{Complex{Float64},3}}(undef, na)
+    FRH = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
+    AR = Vector{Array{Complex{Float64},3}}(undef, numv - 1)
 
     #initializing left environment
 
     for ll = 1:(numv-1)
         #A[ll][na] = coef[ll]*Av[ll][na]
-        FL[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FL[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:(na-1)
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
-        FR[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FR[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FR[ll][na] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 
@@ -736,17 +736,17 @@ function compress_sum_var_apply_H_left(Ain, coef, A, H)
 
     na = length(Ain)
     numv = length(coef)
-    FL = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    FR = Array{Array{Complex{Float64},2}, 1}(undef, numv - 1)
-    FLH = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    AR = Array{Array{Complex{Float64},3}, 1}(undef, numv - 1)
+    FL = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    FR = Vector{Array{Complex{Float64},2}}(undef, numv - 1)
+    FLH = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
+    AR = Vector{Array{Complex{Float64},3}}(undef, numv - 1)
 
     #initializing left environment
 
     for ll = 1:(numv-1)
         #A[ll][na] = coef[ll]*Av[ll][na]
-        FL[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FL[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:(na-1)
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
@@ -799,14 +799,14 @@ function compress_sum_var_apply_H!(A0, envop, coef, A, H, maxsweeps)
 
     na = length(A0)
     numv = length(coef)
-    env = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    AR = Array{Array{Complex{Float64},3}, 1}(undef, numv - 1)
+    env = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    AR = Vector{Array{Complex{Float64},3}}(undef, numv - 1)
 
     #initializing left environment
 
     for ll = 1:(numv-1)
         #A[ll][na] = coef[ll]*Av[ll][na]
-        env[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na + 1)
+        env[ll] = Vector{Array{Complex{Float64},2}}(undef, na + 1)
         env[ll][1][1] = 1.0
         for jj = 1:(na-1)
             env[ll][jj+1] = update_lenv(A0[jj], A[ll][jj], env[ll][jj])
@@ -940,16 +940,16 @@ function compress_sum_var_apply_H_right(Ain, coef, A, H)
 
     na = length(Ain)
     numv = length(coef)
-    FL = Array{Array{Complex{Float64},2}, 1}(undef, numv - 1)
-    FR = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    FRH = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    AL = Array{Array{Complex{Float64},3}, 1}(undef, numv - 1)
+    FL = Vector{Array{Complex{Float64},2}}(undef, numv - 1)
+    FR = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    FRH = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
+    AL = Vector{Array{Complex{Float64},3}}(undef, numv - 1)
 
     #initializing right environment
 
     for ll = 1:(numv-1)
-        FR[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FR[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FR[ll][na] = Matrix{Float64}(I, 1, 1)
         for jj = na:-1:2
             FR[ll][jj-1] = update_renv(Ain[jj], A[ll][jj], FR[ll][jj])
@@ -1065,22 +1065,22 @@ function compress_sum_var_apply_H_two_site(Ain, coef, A, H, maxsweeps, svd_tol, 
 
     na = length(Ain)
     numv = length(coef)
-    FL = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    FR = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    FLH = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    FRH = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    FR = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    FLH = Vector{Array{Complex{Float64},3}}(undef, na)
+    FRH = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing left environment
 
     for ll = 1:numv-1
         #A[ll][na] = coef[ll]*Av[ll][na]
-        FL[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FL[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:na-2
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
-        FR[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FR[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FR[ll][na] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 
@@ -1152,22 +1152,22 @@ function compress_sum_var_apply_H_two_site_left(Ain, coef, A, H, maxsweeps, svd_
 
     na = length(Ain)
     numv = length(coef)
-    FL = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    FR = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    FLH = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    FRH = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    FR = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    FLH = Vector{Array{Complex{Float64},3}}(undef, na)
+    FRH = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing left environment
 
     for ll = 1:numv-1
         #A[ll][na] = coef[ll]*Av[ll][na]
-        FL[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FL[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:na-2
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
-        FR[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FR[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FR[ll][na] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 
@@ -1211,21 +1211,21 @@ function compress_sum_var_apply_H_two_site_right(Ain, coef, A, H, maxsweeps, svd
 
     na = length(Ain)
     numv = length(coef)
-    FL = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    FR = Array{Array{Array{Complex{Float64},2},1}, 1}(undef, numv - 1)
-    FLH = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    FRH = Array{Array{Complex{Float64},3}, 1}(undef, na)
-    A0 = Array{Array{Complex{Float64},3}, 1}(undef, na)
+    FL = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    FR = Vector{Array{Array{Complex{Float64},2},1}}(undef, numv - 1)
+    FLH = Vector{Array{Complex{Float64},3}}(undef, na)
+    FRH = Vector{Array{Complex{Float64},3}}(undef, na)
+    A0 = Vector{Array{Complex{Float64},3}}(undef, na)
 
     #initializing right environment
 
     for ll = 1:numv-1
-        FR[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FR[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FR[ll][na] = Matrix{Float64}(I, 1, 1)
         for jj = na:-1:2
             FR[ll][jj-1] = update_renv(Ain[jj], A[ll][jj], FR[ll][jj])
         end
-        FL[ll] = Array{Array{Complex{Float64},2}, 1}(undef, na)
+        FL[ll] = Vector{Array{Complex{Float64},2}}(undef, na)
         FL[ll][1] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 

@@ -61,12 +61,12 @@ function time_evolve()
     A, dims = mpsgroundstate(TN, TA, na + 1, d_max, [d * ones(na)..., d_c])
 
     # create jump and measurement operators
-    jumpleft = Array{TA{TN,4}, 1}(undef, na + 1)
+    jumpleft = Vector{TA{TN,4}}(undef, na + 1)
     jumpleft[1:na] = makempo(TN, TA, [jj->id jj->im * sqrt(gam_1d[jj] / 2) * exp(im * k_wg * rj[jj]) * hge
             jj->0 jj->id], na, d)
     jumpleft[na+1] = zeros(TN, 1, d_c, 1, d_c)
     jumpleft[na+1][1, :, 1, :] = Matrix{TN}(I, d_c, d_c)
-    jumpright = Array{TA{TN,4}, 1}(undef, na + 1)
+    jumpright = Vector{TA{TN,4}}(undef, na + 1)
     jumpright[1:na] = makempo(TN, TA, [jj->id jj->im * sqrt(gam_1d[jj] / 2) * exp(-im * k_wg * rj[jj]) * hge
             jj->0 jj->id], na, d)
     jumpright[na+1] = zeros(TN, 1, d_c, 1, d_c)
@@ -274,7 +274,7 @@ end
 # with con = 1 and delt = dt creates the linear time evolution operator 1 - im*dt*H
 function vit_hamiltonian(::Type{TN}, ::Type{TA}, con, delt, time) where {TN,TA}
 
-    H = Array{TA{TN,4}, 1}(undef, na + 1)
+    H = Vector{TA{TN,4}}(undef, na + 1)
 
     drj = diff(rj)
     ph = exp.(im * k_wg * drj)
