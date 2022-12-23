@@ -361,7 +361,7 @@ end
 
 function rydberg_hamiltonian(::Type{TN}, ::Type{TA}, con, delt, time) where {TN,TA}
 
-    H = Array{TA{TN,4},1}(na)
+    H = Array{TA{TN,4}, 1}(undef, na)
 
     no_exp = length(lam)
     max_ind = 4 + no_exp

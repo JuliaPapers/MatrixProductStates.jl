@@ -6,7 +6,7 @@ mpsproductstate(na, dmax, d, state::Array) =
 
 function mpsproductstate(::Type{TN}, ::Type{TA}, na, dmax, d, state::Array) where {TN,TA}
 
-    mps = Array{TA{TN,3},1}(na)
+    mps = Array{TA{TN,3}, 1}(undef, na)
     dims = ones(Int64, na + 1)
     dims[2:na] = dmax
     r = ones(TN, 1, 1)
@@ -35,7 +35,7 @@ mpsproductstate(na, dmax, d, state::Function) =
 
 function mpsproductstate(::Type{TN}, ::Type{TA}, na, dmax, d, state::Function) where {TN,TA}
 
-    mps = Array{TA{TN,3},1}(na)
+    mps = Array{TA{TN,3}, 1}(undef, na)
     dims = ones(Int64, na + 1)
     dims[2:na] = dmax
     r = ones(TN, 1, 1)
@@ -78,7 +78,7 @@ mpsgroundstate(na, dmax, d::Array) =
 
 function mpsgroundstate(::Type{TN}, ::Type{TA}, na, dmax, d::Array) where {TN,TA}
 
-    mps = Array{TA{TN,3},1}(na)
+    mps = Array{TA{TN,3}, 1}(undef, na)
     dims = ones(Int64, na + 1)
     dims[2:na] = dmax
     r = ones(TN, 1, 1)
@@ -109,7 +109,7 @@ mpsrandom(na, dmax, d) = mpsrandom(Complex{Float64}, Array, na, dmax, d)
 
 function mpsrandom(::Type{TN}, ::Type{TA}, na, dmax, d) where {TN,TA}
 
-    mps = Array{TA{TN,3},1}(na)
+    mps = Array{TA{TN,3}, 1}(undef, na)
     dims = ones(Int64, na + 1)
     dims[2:na] = dmax
 
@@ -195,7 +195,7 @@ makemps(mpsmat, na, d) = makemps(Complex{Float64}, Array, mpsmat, na, d)
 
 function makemps(::Type{TN}, ::Type{TA}, mpsmat, na, d) where {TN,TA}
 
-    mps = Array{TA{TN,3},1}(na)
+    mps = Array{TA{TN,3}, 1}(undef, na)
 
     b1 = size(mpsmat, 1)
     b2 = size(mpsmat, 2)
@@ -225,7 +225,7 @@ makempo(mpomat, na, d) = makempo(Complex{Float64}, Array, mpomat, na, d)
 
 function makempo(::Type{TN}, ::Type{TA}, mpomat, na, d) where {TN,TA}
 
-    mpo = Array{TA{TN,4},1}(na)
+    mpo = Array{TA{TN,4}, 1}(undef, na)
 
     b1 = size(mpomat, 1)
     b2 = size(mpomat, 2)
@@ -255,7 +255,7 @@ Revert an MPS to MPO after previous conversion to MPS
 function mps_to_mpo(::Type{TN}, ::Type{TA}, mpsin) where {TN,TA}
 
     na = length(mpsin)
-    mpoout = Array{TA{TN,4},1}(na)
+    mpoout = Array{TA{TN,4}, 1}(undef, na)
     for n = 1:na
         (dl, d, dr) = size(mpsin[n])
         mpoout[n] = permutedims(reshape(mpsin[n],
@@ -274,7 +274,7 @@ especially for density matrix which has different indice order
 function mps_to_mpo_dens(::Type{TN}, ::Type{TA}, mpsin) where {TN,TA}
 
     na = length(mpsin)
-    mpoout = Array{TA{TN,4},1}(na)
+    mpoout = Array{TA{TN,4}, 1}(undef, na)
     for n = 1:na
         (dl, d, dr) = size(mpsin[n])
         mpoout[n] = permutedims(reshape(mpsin[n],
@@ -292,7 +292,7 @@ physical indices of the operator into one d^2 index
 function mpo_to_mps(::Type{TN}, ::Type{TA}, mpoin) where {TN,TA}
 
     na = length(mpoin)
-    mpsout = Array{TA{TN,3},1}(na)
+    mpsout = Array{TA{TN,3}, 1}(undef, na)
     for n = 1:na
         mpsout[n] = mpo_to_mps_site(mpoin[n])
     end
@@ -317,7 +317,7 @@ with special order for density matrix
 function mpo_to_mps_dens(::Type{TN}, ::Type{TA}, mpoin) where {TN,TA}
 
     na = length(mpoin)
-    mpsout = Array{TA{TN,3},1}(na)
+    mpsout = Array{TA{TN,3}, 1}(undef, na)
     for n = 1:na
         mpsout[n] = mpo_to_mps_dens_site(mpoin[n])
     end
@@ -339,7 +339,7 @@ build_env(dims1, dims2, mpo_dims) = build_env(Complex{Float64}, Array, dims1, di
 
 function build_env(::Type{TN}, ::Type{TA}, dims1, dims2, mpo_dims) where {TN,TA}
 
-    env = Array{TA{TN,3},1}(length(dims1))
+    env = Array{TA{TN,3}, 1}(undef, length(dims1))
 
     env[1] = ones(TN, 1, 1, 1)
     for n in 2:(length(dims1)-1)
@@ -355,7 +355,7 @@ build_env(dims1, dims2) = build_env(Complex{Float64}, Array, dims1, dims2)
 
 function build_env(::Type{TN}, ::Type{TA}, dims1, dims2) where {TN,TA}
 
-    env = Array{TA{TN,2},1}(length(dims1))
+    env = Array{TA{TN,2}, 1}(undef, length(dims1))
 
     env[1] = ones(TN, 1, 1)
     for n in 2:(length(dims1)-1)

@@ -140,7 +140,7 @@ function time_evolve()
     times[1, :] = read(file, "times")
     i_last = read(file, "i_last")
     close(file)
-    rho = Array{TA{TN,3},1}(na)
+    rho = Array{TA{TN,3}, 1}(undef, na)
     copy!(rho, rho_temp)
     dims = mpsdims(rho_temp)
     rho_temp = 0
@@ -241,7 +241,7 @@ end
 
 function construct_L_Ryd(::Type{TN}, ::Type{TA}, con, delt, time) where {TN,TA}
 
-    LMPO = Array{TA{TN,4},1}(na)
+    LMPO = Array{TA{TN,4}, 1}(undef, na)
     drj = diff(rj)
     ph = exp.(im * k_wg * drj)
     cp = sqrt.(delt * gam_1d / 2)
