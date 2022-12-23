@@ -90,7 +90,7 @@ end
 function prod_LR_co(L::AbstractArray{<:Number, 2}, R::AbstractArray{<:Number, 3})
 
     r1, r2, r3 = size(R)
-    reshape(L.'*reshape(R, r1, r2*r3), size(L, 2), r2, r3)
+    reshape(transpose(L) * reshape(R, r1, r2*r3), size(L, 2), r2, r3)
 
 end
 
@@ -318,7 +318,7 @@ function update_lenv_nc(A0::AbstractArray{<:Number, 3},
     AL::AbstractArray{<:Number, 3})
 
     a1, d, a3 = size(A0)
-    reshape(A0, a1*d, a3).'*reshape(AL, a1*d, size(AL, 3))
+    transpose(reshape(A0, a1*d, a3)) * reshape(AL, a1*d, size(AL, 3))
 
 end
 

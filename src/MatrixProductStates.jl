@@ -213,7 +213,7 @@ function A_prod_LOR_test(L,A,O,R)
     A = permutedims(reshape(A,al,d,dwr,rr),[3,2,1,4])
     A = reshape(O,dwl*d,d*dwr)*reshape(A,d*dwr,rr*al)
     A = permutedims(reshape(A,dwl,d,al,rr),[3,1,2,4])
-    A = reshape(L,ll*dwl,lr).'*reshape(A,ll*dwl,rr*d)
+    A = transpose(reshape(L,ll*dwl,lr)) * reshape(A,ll*dwl,rr*d)
     A = reshape(A,lr,d,rr)
 
 end
@@ -225,7 +225,7 @@ function A_prod_LOR_test_2(L,A,O,R)
     ll,dwl,lr = size(L)
 
     A = reshape(A,al*d,ar)*reshape(R,ar,dwr*rr)
-    A = reshape(L,ll,dwl*lr).'*reshape(A,ll,d*dwr*rr)
+    A = transpose(reshape(L,ll,dwl*lr)) * reshape(A,ll,d*dwr*rr)
     A = permutedims(reshape(A,dwl,lr,d*dwr,rr),[1,3,2,4])
     O = reshape(permutedims(O,[2,1,4,3]),d,dwr*d*dwl)
     A = O*reshape(A,dwr*d*dwl,lr*rr)
