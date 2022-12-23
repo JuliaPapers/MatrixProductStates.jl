@@ -14,6 +14,7 @@ export ground_state_search_full, expandMPS, mpsdims, normMPS, local_exp
 export normalize_lo!, norm_lo, conj_site_mpo, conj_mpo, scal_prod_no_conj, scal_op_prod
 export apply_site_operator!, update_renv, prod_LR
 
+using LinearAlgebra  # LAPACK, tr
 using TensorOperations
 using LinearMaps
 #using CuArrays

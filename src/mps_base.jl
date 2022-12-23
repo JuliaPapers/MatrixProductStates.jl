@@ -342,6 +342,6 @@ function local_exp(A0, A, O)
     Ap = reshape(permutedims(A, [2, 1, 3]), d, a1 * a3)
     A0p = reshape(permutedims(A0, [2, 1, 3]), d, a1 * a3)
     Ap = Ap * A0p'
-    trace(O * Ap)
+    tr(O * Ap)
 
 end
