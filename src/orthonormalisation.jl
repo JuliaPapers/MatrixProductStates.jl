@@ -1,3 +1,5 @@
+using LinearAlgebra  # LAPACK
+
 
 function leftorthoQR_MPO!(mpoin)
     n = length(mpoin);
