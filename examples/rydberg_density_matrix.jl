@@ -84,7 +84,7 @@ const d_max = 100
 const measure_int = 5
 const path_data = "/home/jdouglas/data/"
 const base_filename = string(path_data, "Ryd_Dens_N", na, "_D", d_max,
-    "_Tf", t_fin, "_f", round(f_amp, 3), "_dt", dt, "_five_exp")
+    "_Tf", t_fin, "_f", round(f_amp; digits=3), "_dt", dt, "_five_exp")
 
 # input pulse envelope
 function f(t)

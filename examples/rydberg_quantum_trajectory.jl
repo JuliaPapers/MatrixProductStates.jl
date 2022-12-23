@@ -88,7 +88,7 @@ const d_max = 10
 const measure_int = 5
 const path_data = "/home/jdouglas/data/" # save directory
 const base_filename = string(path_data, "Ryd_Jumps_N", na, "_D", d_max,
-    "_Tf", t_fin, "_f", round(f_amp, 3), "_dt", dt, "_traj", setrand)
+    "_Tf", t_fin, "_f", round(f_amp; digits=3), "_dt", dt, "_traj", setrand)
 
 # envelope of input pulse
 function f(t)

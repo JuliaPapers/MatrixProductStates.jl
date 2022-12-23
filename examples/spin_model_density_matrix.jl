@@ -23,7 +23,7 @@ const measure_int = 5 # number of time steps per observable measurement
 
 const path_data = "/home/jdouglas/data/" # save directory
 const base_filename = string(path_data, "SMPhaseSup_Dens_N", na, "_D", d_max,
-    "_Tf", t_fin, "_dt", dt, "_kwg", round(k_wg / pi, 3))
+    "_Tf", t_fin, "_dt", dt, "_kwg", round(k_wg / pi; digits=3))
 
 # local spin operators
 const hgg = [1 0; 0 0]
