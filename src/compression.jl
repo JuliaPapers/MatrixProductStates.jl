@@ -15,7 +15,6 @@ function to compress mps A using maxsweeps left and right of the
 variational algorithm with Ain as initial guess. Ain must be in left
 canonical form (normalisation not necessary)
 """
-
 function compress_var(Ain,A,maxsweeps)
 
     na = length(Ain)
@@ -106,7 +105,6 @@ function to compress mps A using maxsweeps left and right of the two
 site variational algorithm with Ain as initial guess. Ain must be in left
 canonical form (normalisation not necessary)
 """
-
 function compress_var_two_site(Ain,A,maxsweeps,svd_tol,dims,dlim)
 
     na = length(Ain)
@@ -169,7 +167,6 @@ function to compress mps resulting from the product of H and A using
 maxsweeps left and right of the variational algorithm with Ain as
 initial guess. Ain must be in left canonical form (normalisation not necessary)
 """
-
 function compress_var_apply_H(Ain, A, H, maxsweeps)
 
     na = length(Ain)
@@ -351,7 +348,6 @@ function to compress mps resulting from the product of H and A using
 maxsweeps left and right of the variational two site algorithm with Ain as
 initial guess. Ain must be in left canonical form (normalisation not necessary)
 """
-
 function compress_var_apply_H_two_site(Ain,A,H,maxsweeps,svd_tol,dims,dlim)
 
     na = length(Ain)
@@ -492,7 +488,6 @@ have weights given by coef, using a
 variational algorithm with Ain as initial guess. Ain must be in left
 canonical form (normalisation not necessary)
 """
-
 function compress_sum_var(Ain, coef, A, maxsweeps)
 
     na = length(Ain)
@@ -570,7 +565,6 @@ have weights given by coef, using the two site
 variational algorithm with Ain as initial guess. Ain must be in left
 canonical form (normalisation not necessary)
 """
-
 function compress_sum_var_two_site(Ain,coef,A,maxsweeps,svd_tol,dims,dlim)
 
     na = length(Ain)
@@ -653,7 +647,6 @@ have weights given by coef and where H is applied to the last MPS.
 The compression uses the variational algorithm with A0 as initial guess.
 A0 must be in left canonical form (normalisation not necessary)
 """
-
 function compress_sum_var_apply_H(Ain, coef, A, H, maxsweeps)
 
     na = length(Ain)
@@ -1068,7 +1061,6 @@ have weights given by coef and where H is applied to the last MPS.
 The compression uses the two site variational algorithm with A0 as initial guess.
 A0 must be in left canonical form (normalisation not necessary)
 """
-
 function compress_sum_var_apply_H_two_site(Ain,coef,A,H,maxsweeps,svd_tol,dims,dlim)
 
     na = length(Ain)

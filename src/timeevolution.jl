@@ -3,7 +3,6 @@
 function to find MPS approximation of exp(A)v using the Arnoldi method with 
 numv Krylov space vectors
 """
-
 function Arnoldi_expm(A, v, numv)
 
     rhov = Array{Array{Array{Complex{Float64}, 3}, 1}, 1}(numv)
@@ -120,7 +119,6 @@ end
 """
 function to evolve MPS using the 4th order Runga Kutta method
 """
-
 function RK4stp(dt,H,psi,k0)
 
 k1 = compress_var(k0,applyMPOtoMPS(psi,H[1]),1)
@@ -139,7 +137,6 @@ end
 """
 function to evolve MPS using the 4th order Runga Kutta method
 """
-
 function RK4stp_alt(dt,H,psi)
 
 psi1 = compress_sum_var(psi,[1,dt/2],[psi,applyMPOtoMPS(psi,H[1])],1)
@@ -154,7 +151,6 @@ end
 """
 function to evolve MPS using the 4th order Runga Kutta method
 """
-
 function RK4stp_apply_H(dt,H,psi)
 
 psi1 = compress_var_apply_H(psi,psi,H[1],1)
@@ -231,7 +227,6 @@ end
 function to evolve MPS A (must be in left canonical form)
 in time acording to the trapezoidal method
 """
-
 function Evolve_trap(A,LF,LB,maxsweeps,nor)
 
 	na = length(A)

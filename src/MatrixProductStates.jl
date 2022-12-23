@@ -38,7 +38,6 @@ include("orthonormalisation.jl")
 """
 return a vec of the bond dimensions
 """
-
 function mpsdims(mps)
 
     na = length(mps)
@@ -64,7 +63,6 @@ end
 """
 make operator product mpo2*mpo1
 """
-
 function applyMPOtoMPO(mpo1,mpo2)
 
         n = length(mpo2)
@@ -112,7 +110,6 @@ applyMPOtoMPS(mpsin,mpo);
 
 Multiplies the MPS A and the MPO U
 """
-
 function applyMPOtoMPS(mpsin,mpo)
 
     n = length(mpsin)
@@ -152,7 +149,6 @@ end
 """
 product of state and local operator with left and right environments operators
 """
-
 function O_prod_LR(L,O,R)
 
     @tensor A[-1,-2,-3,-4,-5,-6] := L[-4,1,-1]*O[1,-2,2,-5]*R[-6,2,-3]
@@ -162,7 +158,6 @@ end
 """
 product of two sites states and local operators with left and right environments operators
 """
-
 function A_prod_LOR_two_site(L,A1,O1,A2,O2,R)
 
     @tensor A[-1,-2,-3,-4] := L[1,2,-1]*A1[1,3,4]*O1[2,-2,5,3]*A2[4,6,7]*O2[5,-3,8,6]*R[7,8,-4]
@@ -188,7 +183,6 @@ end
 """
 update right environment for operator
 """
-
 function update_re_large(A0,O,A,FR)
 
     @tensor FR[-1,-2,-3,-4] := FR[1,2,3,4]*conj(A0[-4,3,4])*A[-1,5,1]*O[-2,-3,2,5]
@@ -243,7 +237,6 @@ end
 product of state and local operator with left and right environments operators
 designed for use with eigs
 """
-
 function A_prod_LOR_eigs(L,Ain,O,R)
 
 	A = reshape(Ain[:],size(L,1),size(O,4),size(R,1))
@@ -256,7 +249,6 @@ end
 product of state and two local operators with left and right environments operators
 designed for use with eigs
 """
-
 function A_prod_L_OO_R_eigs(L,Ain,O1,O2,R)
 
     A = reshape(Ain[:],size(L,1),size(O1,4),size(R,1))
@@ -285,7 +277,6 @@ end
 """
 product of two local A tensors with left and right environments
 """
-
 function A_prod_LR_two_site(L,A1,A2,R)
 
     @tensor A[-1,-2,-3,-4] := L[1,-1]*A1[1,-2,2]*A2[2,-3,3]*R[3,-4]
@@ -295,7 +286,6 @@ end
 """
 update left environment for two operators
 """
-
 function update_lenv_two_op(A0,O1,O2,A,FL)
 
     @tensor FL[-1,-2,-3,-4] := FL[1,2,3,4]*A[1,5,-1]*O1[2,6,-2,5]*O2[3,7,-3,6]*conj(A0[4,7,-4])
@@ -305,7 +295,6 @@ end
 """
 update right environment for two operators
 """
-
 function update_renv_two_op(A0,O1,O2,A,FR)
 
     @tensor FR[-1,-2,-3,-4] := FR[1,2,3,4]*A[-1,5,1]*O1[-2,6,2,5]*O2[-3,7,3,6]*conj(A0[-4,7,4])
@@ -363,7 +352,6 @@ scal_prod(mps1,mps2)
 
 Compute scalar product of two mps, <mps1|mps2> without conjugating mps1
 """
-
 function scal_prod_no_conj(mps1, mps2)
 
     na = length(mps1)
@@ -385,7 +373,6 @@ diff_norm(mps1,mps2)
 
 Compute norm of difference between two mps,<mps1|mps1> + <mps2|mps2> - <mps1|mps2> - <mps2|mps1>
 """
-
 function diff_norm(mps1,mps2)
 
     normMPS(mps1) + normMPS(mps2) - 2*real(scal_prod(mps1,mps2))

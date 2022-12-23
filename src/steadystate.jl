@@ -2,7 +2,6 @@
 function to find steady state for MPO L given input guess A in left
 canonical form (normalisation not necessary). Matrix as linear map.
 """
-
 function steady_state_search!(At,L,Lconj,maxsweeps,converge_rat,eigs_tol)
 
     na = length(At)

@@ -276,7 +276,6 @@ MPS_to_MPO_dens(mpsin)
 Revert an MPS to MPO after previous conversion to MPS
 especially for density matrix which has different indice order
 """
-
 function mps_to_mpo_dens(::Type{TN}, ::Type{TA}, mpsin) where {TN, TA}
     
     na = length(mpsin)
@@ -320,7 +319,6 @@ turn MPO into and MPS, reducing the two d dimension
 physical indices of the operator into one d^2 index
 with special order for density matrix
 """
-
 function mpo_to_mps_dens(::Type{TN}, ::Type{TA}, mpoin) where {TN, TA}
 
     na = length(mpoin)

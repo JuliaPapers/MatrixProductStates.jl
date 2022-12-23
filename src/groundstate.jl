@@ -2,7 +2,6 @@
 function to find ground state MPS for MPO H given input guess A in left
 canonical form (normalisation not necessary). Full matrix calc.
 """
-
 function ground_state_search_full(A,H,maxsweeps)
 
     na = length(A)
@@ -63,7 +62,6 @@ end
 function to find ground state MPS for MPO H given input guess A in left
 canonical form (normalisation not necessary). Matrix as linear map.
 """
-
 function ground_state_search!(At,H,maxsweeps,converge_rat,eigs_tol)
 
     na = length(At)

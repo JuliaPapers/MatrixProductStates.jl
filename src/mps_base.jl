@@ -21,8 +21,6 @@ end
 """
 product of site tensor A with local operator O and left environment L
 """
-
-
 function prod_AOL(A::AbstractArray{<:Number, 3}, O::AbstractArray{<:Number, 4},
     L::AbstractArray{<:Number, 3})
 

@@ -93,7 +93,6 @@ end
 """
 function to normalize left orthogonal MPS
 """
-
 function normalize_lo!(mps)
 
     no = sum(abs2.(mps[end][:]))
@@ -113,7 +112,6 @@ end
 """
 function to get norm of left orthogonal MPS
 """
-
 function norm_lo(mps)
 
     no = sum(abs2.(mps[end][:]))
@@ -123,7 +121,6 @@ end
 """
 function to normalize left orthogonal MPS
 """
-
 function normalize_ro!(mps)
 
     no = sum(abs2(mps[1][:]))
@@ -135,7 +132,6 @@ end
 """
 function to get norm of right orthogonal MPS
 """
-
 function norm_ro(mps)
 
     no = sum(abs2(mps[1][:]))
@@ -146,7 +142,6 @@ end
 Separate a MPS tensor A into a left orthonormal tensor AL and a bond
 factor C
 """
-
 function leftorth(A)
 
     Dl, d, Dr = size(A)
@@ -160,7 +155,6 @@ end
 Separate a MPS tensor A into a left orthonormal tensor AL and a bond
 factor C in place
 """
-
 function leftorth!(A)
 
     Dl, d, Dr = size(A)
@@ -223,7 +217,6 @@ end
 Separate a MPS tensor A into a right orthonormal tensor AR and a bond
 factor C in place
 """
-
 function rightorth!(A)
 
     Dl, d, Dr = size(A)
