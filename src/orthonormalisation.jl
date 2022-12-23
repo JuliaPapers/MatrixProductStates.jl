@@ -198,9 +198,9 @@ factor C
 function rightorth(A)
 
     Dl, d, Dr = size(A)
-    Q, C = qr(reshape(A, Dl, d*Dr).')
-    Q = reshape(Q.', size(Q, 2), d, Dr)
-    return Q, C.'
+    Q, C = qr( reshape(A, Dl, d*Dr)' )
+    Q = reshape(Q', size(Q, 2), d, Dr)
+    return Q, C'
 
 end
 
@@ -220,9 +220,9 @@ factor C in place
 function rightorth!(A)
 
     Dl, d, Dr = size(A)
-    A = reshape(A, Dl, d*Dr).'
+    A = reshape(A, Dl, d*Dr)'
     Q = qrq!(A)
-    reshape(Q.', size(Q, 2), d, Dr)
+    reshape(Q', size(Q, 2), d, Dr)
 
 end
 
