@@ -1,0 +1,4 @@
+[deps]
+CuArrays = "3a865a2d-5b23-5a0f-bc46-62713ec82fae"
+MAT = "23992714-dd62-5051-b70f-ba57cb901cac"
+MatrixProductStates = "28892423-5e71-5a24-babc-7f7f28a8bceb"
