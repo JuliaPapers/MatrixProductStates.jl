@@ -7,26 +7,26 @@ BLAS.set_num_threads(nworkers())
 #Spin model parameters
 const na = 60 # number of atoms
 const od = 33 # optical depth of cloud
-const ad = 2.5*60/na #atomic distance in micro m
-const cloud_sig = 23.6344/ad # cloud length
-const cloud_coup = exp.(-((1:na)-(na+1)/2).^2/2/cloud_sig^2) # atomic cloud distribution
-const gam_1d = cloud_coup/sum(cloud_coup)/2*od # coupling of atoms
+const ad = 2.5 * 60 / na #atomic distance in micro m
+const cloud_sig = 23.6344 / ad # cloud length
+const cloud_coup = exp.(-((1:na) - (na + 1) / 2) .^ 2 / 2 / cloud_sig^2) # atomic cloud distribution
+const gam_1d = cloud_coup / sum(cloud_coup) / 2 * od # coupling of atoms
 const gam_eg = 1.0 # eg spontaneous decay rate
 const del_p = 0.0 # detuning of pump beam
-const k_wg = 0.5*pi # waveguide wavevector
+const k_wg = 0.5 * pi # waveguide wavevector
 const rj = collect(1.0:na) #sort!(rand(na)*na) # atom positions
 const k_in = k_wg # pump beam wavevector 
-const gam_exp = 2*pi*6.065e6 # spontaneous emmision rate
-const f_amp_exp = sqrt.([0.0589,0.0721,0.0995,0.1637,0.3081,0.6395,1.2121,1.8898, 
-    2.6039,4.2050,7.1291,10.4823,17.0816,27.1592,42.8378,71.7874]/gam_exp/1e-6)
+const gam_exp = 2 * pi * 6.065e6 # spontaneous emmision rate
+const f_amp_exp = sqrt.([0.0589, 0.0721, 0.0995, 0.1637, 0.3081, 0.6395, 1.2121, 1.8898,
+    2.6039, 4.2050, 7.1291, 10.4823, 17.0816, 27.1592, 42.8378, 71.7874] / gam_exp / 1e-6)
 const f_amp = f_amp_exp[11]
 
 #Rydberg specific parameters
-const om = 10.0/6.065/2.0 # control beam Rabi frequency
+const om = 10.0 / 6.065 / 2.0 # control beam Rabi frequency
 const k_c = 0.0 # control wavevector
 const del_s = 0.0 # two photon detuning from s level
-const gam_sp = 0.100/6.065
-const gam_pg = 0.100/6.065
+const gam_sp = 0.100 / 6.065
+const gam_pg = 0.100 / 6.065
 
 # rmax = 20 na = 70 
 #uu = [524.328+89.9671im, 524.328-89.9671im, 649.737+219.429im, 649.737-219.429im, 488.928]
@@ -86,30 +86,30 @@ const d = 4
 const d_max = 200
 const measure_int = 5
 const path_data = string(homedir(), "/data/")
-const base_filename = string(path_data,"Ryd_Dens_N",na,"_D",d_max,
-    "_Tf",t_fin,"_f",round(f_amp,3),"_dt",dt,"_three_exp_float32_gsp",
-    round(gam_sp,3),"_gpg",round(gam_pg,3))
+const base_filename = string(path_data, "Ryd_Dens_N", na, "_D", d_max,
+    "_Tf", t_fin, "_f", round(f_amp, 3), "_dt", dt, "_three_exp_float32_gsp",
+    round(gam_sp, 3), "_gpg", round(gam_pg, 3))
 
 
 # input pulse envelope
 function f(t)
 
-    trise = 0.8e-6*gam_exp
-    tup = 2e-6*gam_exp
+    trise = 0.8e-6 * gam_exp
+    tup = 2e-6 * gam_exp
 
     if t < 0
         envelope = 0.0
     elseif t < trise
-        envelope = (1.0 + cos(pi*(t - trise)/trise))/2
+        envelope = (1.0 + cos(pi * (t - trise) / trise)) / 2
     elseif t <= tup + trise
         envelope = 1.0
-    elseif t <= 2*trise + tup
-        envelope = (1.0 + cos(pi*(t - tup - trise)/trise))/2
+    elseif t <= 2 * trise + tup
+        envelope = (1.0 + cos(pi * (t - tup - trise) / trise)) / 2
     else
         envelope = 0.0
     end
 
-    f_amp*sqrt(envelope)
+    f_amp * sqrt(envelope)
 
 end
 
@@ -137,12 +137,12 @@ function time_evolve()
 
     # construct left-canonical MPS for the initial state
     rho, dims = mpsgroundstate(TN, TA, na, d_max, d^2)
-    
+
     #Create measurement operators
-    IDlmps = makemps(TN, TA, [jj->id[:]], na, d^2)
-    ERmpo = makempo(TN, TA, [jj->id jj->im*sqrt(gam_1d[jj]/2)*exp(-im*k_wg*rj[jj])*hge;
-                        jj->0 jj->id], na, d)
-    ERmpo[1][1, :, 2, :] = f(0.0)*id + im*sqrt(gam_1d[1]/2)*exp(-im*k_wg*rj[1])*hge
+    IDlmps = makemps(TN, TA, [jj -> id[:]], na, d^2)
+    ERmpo = makempo(TN, TA, [jj->id jj->im * sqrt(gam_1d[jj] / 2) * exp(-im * k_wg * rj[jj]) * hge
+            jj->0 jj->id], na, d)
+    ERmpo[1][1, :, 2, :] = f(0.0) * id + im * sqrt(gam_1d[1] / 2) * exp(-im * k_wg * rj[1]) * hge
     IRmpo = applyMPOtoMPO(ERmpo, conj_mpo(ERmpo))
     IRlmps = mpo_to_mps(TN, TA, IRmpo)
 
@@ -167,16 +167,16 @@ function time_evolve()
     rho1 .= copy.(rho)
     rho2 .= copy.(rho)
     rho3 .= copy.(rho)
-    mpo_size = 6 + 2*length(lam)
+    mpo_size = 6 + 2 * length(lam)
     env1 = build_env(TN, TA, dims, dims)
     env2 = build_env(TN, TA, dims, dims)
     env3 = build_env(TN, TA, dims, dims)
-    envop = build_env(TN, TA, dims, dims, ones(na + 1)*mpo_size)
+    envop = build_env(TN, TA, dims, dims, ones(na + 1) * mpo_size)
 
     # time evolution operators for Runge Kutta algorithm
-    L1 = construct_L_Ryd(TN, TA, 1, dt/2, t[1])
-    L2 = construct_L_Ryd(TN, TA, 0, 1, t[1] + dt/2)
-    L3 = construct_L_Ryd(TN, TA, 1, dt/2, t[2])
+    L1 = construct_L_Ryd(TN, TA, 1, dt / 2, t[1])
+    L2 = construct_L_Ryd(TN, TA, 0, 1, t[1] + dt / 2)
+    L3 = construct_L_Ryd(TN, TA, 1, dt / 2, t[2])
     L = [L1, L2, L3]
 
     println("Initialisation complete")
@@ -187,48 +187,48 @@ function time_evolve()
 
     # time evolution
     for i = 1:tstep
-        time_in = time();
+        time_in = time()
 
         # update time-evolution operator
-        update_L_Ryd!(L1, 1, dt/2, t[i])
-        update_L_Ryd!(L2, 0, 1, t[i] + dt/2)
-        update_L_Ryd!(L3, 1, dt/2, t[i + 1])
-		times[i,1] = time() - time_in
+        update_L_Ryd!(L1, 1, dt / 2, t[i])
+        update_L_Ryd!(L2, 0, 1, t[i] + dt / 2)
+        update_L_Ryd!(L3, 1, dt / 2, t[i+1])
+        times[i, 1] = time() - time_in
 
         # Runge-Kutta 4th order time step
         RK4stp_apply_H_half!(dt, L, rho, rho1, rho2, rho3, env1, env2, env3, envop)
-        times[i,2] = time() - times[i,1] - time_in
-        
+        times[i, 2] = time() - times[i, 1] - time_in
+
         # measurements (every measure_int time steps)
         if rem(i, measure_int) == 0
             mind = div(i, measure_int) + 1
             # atomic state populations
             tr_rho[mind] = scal_prod_no_conj(IDlmps, rho)
             # output right field update
-            ERmpo[1][1, :, 2, :] = f(t[i + 1])*id +
-                im*sqrt(gam_1d[1]/2)*exp(-im*k_wg*rj[1])*hge
-            IRupdate =  apply_site_MPOtoMPO(ERmpo[1], conj_site_mpo(ERmpo[1]))
+            ERmpo[1][1, :, 2, :] = f(t[i+1]) * id +
+                                   im * sqrt(gam_1d[1] / 2) * exp(-im * k_wg * rj[1]) * hge
+            IRupdate = apply_site_MPOtoMPO(ERmpo[1], conj_site_mpo(ERmpo[1]))
             IRlmps[1] = mpo_to_mps_site(IRupdate)
             # output field measurement
-            I_r[mind] = scal_prod_no_conj(IRlmps,rho)
+            I_r[mind] = scal_prod_no_conj(IRlmps, rho)
             times[i, 3] = time() - times[i, 2] - times[i, 1] - time_in
         end
-        
-        # saving temporary file
-        if rem(i, measure_int*20) == 0
-            write_data_file(string(base_filename,"_temp.mat"), i, t_m, tr_rho, I_r, rho, times)
 
-        end  
+        # saving temporary file
+        if rem(i, measure_int * 20) == 0
+            write_data_file(string(base_filename, "_temp.mat"), i, t_m, tr_rho, I_r, rho, times)
+
+        end
 
         # saving mid pulse data
         if i == 10000
-            write_data_file(string(base_filename,"_mid_pulse.mat"), i, t_m, tr_rho, I_r, rho, times)
-       end  
+            write_data_file(string(base_filename, "_mid_pulse.mat"), i, t_m, tr_rho, I_r, rho, times)
+        end
 
     end
 
     # saving to final data to file
-    write_data_file(string(base_filename,".mat"), tstep, t_m, tr_rho, I_r, rho, times)
+    write_data_file(string(base_filename, ".mat"), tstep, t_m, tr_rho, I_r, rho, times)
 
 
 end
@@ -267,76 +267,76 @@ function write_data_file(filename, i, t_m, tr_rho, I_r, rho, times)
     write(file, "tr_rho", tr_rho)
     write(file, "I_r", I_r)
     write(file, "rho", collect.(rho))
-    write(file, "times", sum(times,1))
+    write(file, "times", sum(times, 1))
     close(file)
 
 end
 
-function construct_L_Ryd(::Type{TN}, ::Type{TA}, con, delt, time) where {TN, TA}
+function construct_L_Ryd(::Type{TN}, ::Type{TA}, con, delt, time) where {TN,TA}
 
-    LMPO = Array{TA{TN, 4}, 1}(na)
-	drj = diff(rj)
-	ph = exp.(im*k_wg*drj)
-	cp = sqrt.(delt*gam_1d/2)
+    LMPO = Array{TA{TN,4},1}(na)
+    drj = diff(rj)
+    ph = exp.(im * k_wg * drj)
+    cp = sqrt.(delt * gam_1d / 2)
     no_exp = length(lam)
-    max_ind = 6 + 2*no_exp
+    max_ind = 6 + 2 * no_exp
 
-	LMPO[1] = zeros(TN, 1, d^2, max_ind, d^2)
-	LMPO[1][1, :, 1, :] = kron(id, id)
-	LMPO[1][1, :, 2, :] = cp[1]*ph[1]*(kron(id, hge) - kron(heg, id))
-	LMPO[1][1, :, 3, :] = cp[1]*ph[1]*(kron(hge, id))
-	LMPO[1][1, :, 4, :] = cp[1]'*ph[1]'*(kron(id, hge))
-	LMPO[1][1, :, 5, :] = cp[1]'*ph[1]'*(kron(hge, id) - kron(id, heg))
+    LMPO[1] = zeros(TN, 1, d^2, max_ind, d^2)
+    LMPO[1][1, :, 1, :] = kron(id, id)
+    LMPO[1][1, :, 2, :] = cp[1] * ph[1] * (kron(id, hge) - kron(heg, id))
+    LMPO[1][1, :, 3, :] = cp[1] * ph[1] * (kron(hge, id))
+    LMPO[1][1, :, 4, :] = cp[1]' * ph[1]' * (kron(id, hge))
+    LMPO[1][1, :, 5, :] = cp[1]' * ph[1]' * (kron(hge, id) - kron(id, heg))
     for exp_ind = 1:no_exp
-        LMPO[1][1, :, 5 + 2*exp_ind - 1, :] = sqrt(-im*delt*uu[exp_ind]*lam[exp_ind])*
-            (kron(hss, id) + kron(hpp, id))
-        LMPO[1][1, :, 5 + 2*exp_ind, :] = sqrt(im*delt*uu[exp_ind]*lam[exp_ind])*
-            (kron(id, hss) + kron(id, hpp))
+        LMPO[1][1, :, 5+2*exp_ind-1, :] = sqrt(-im * delt * uu[exp_ind] * lam[exp_ind]) *
+                                          (kron(hss, id) + kron(hpp, id))
+        LMPO[1][1, :, 5+2*exp_ind, :] = sqrt(im * delt * uu[exp_ind] * lam[exp_ind]) *
+                                        (kron(id, hss) + kron(id, hpp))
     end
-	LMPO[1][1, :, max_ind, :] = local_l(1, con, delt, time)
+    LMPO[1][1, :, max_ind, :] = local_l(1, con, delt, time)
 
-	LMPO[na] = zeros(TN, max_ind, d^2, 1, d^2)
-	LMPO[na][1, :, 1, :] = local_l(na, con, delt, time)
-	LMPO[na][2, :, 1, :] = cp[na]*kron(hge, id)
-	LMPO[na][3, :, 1, :] = -cp[na]*(kron(heg, id) - kron(id, hge))
-	LMPO[na][4, :, 1, :] = -cp[na]'*(kron(id, heg) - kron(hge, id))
-	LMPO[na][5, :, 1, :] = cp[na]'*kron(id, hge)
+    LMPO[na] = zeros(TN, max_ind, d^2, 1, d^2)
+    LMPO[na][1, :, 1, :] = local_l(na, con, delt, time)
+    LMPO[na][2, :, 1, :] = cp[na] * kron(hge, id)
+    LMPO[na][3, :, 1, :] = -cp[na] * (kron(heg, id) - kron(id, hge))
+    LMPO[na][4, :, 1, :] = -cp[na]' * (kron(id, heg) - kron(hge, id))
+    LMPO[na][5, :, 1, :] = cp[na]' * kron(id, hge)
     for exp_ind = 1:no_exp
-        LMPO[na][5 + 2*exp_ind - 1, :, 1, :] = sqrt(-im*delt*uu[exp_ind]*lam[exp_ind])*
-            (kron(hss, id) + kron(hpp, id))
-        LMPO[na][5 + 2*exp_ind, :, 1, :] = sqrt(im*delt*uu[exp_ind]*lam[exp_ind])*
-            (kron(id, hss) + kron(id, hpp))
+        LMPO[na][5+2*exp_ind-1, :, 1, :] = sqrt(-im * delt * uu[exp_ind] * lam[exp_ind]) *
+                                           (kron(hss, id) + kron(hpp, id))
+        LMPO[na][5+2*exp_ind, :, 1, :] = sqrt(im * delt * uu[exp_ind] * lam[exp_ind]) *
+                                         (kron(id, hss) + kron(id, hpp))
     end
-	LMPO[na][max_ind, :, 1, :] = kron(id, id)
+    LMPO[na][max_ind, :, 1, :] = kron(id, id)
 
-    for jj = 2:(na - 1)
+    for jj = 2:(na-1)
         LMPO[jj] = zeros(TN, max_ind, d^2, max_ind, d^2)
         LMPO[jj][1, :, 1, :] = kron(id, id)
-        LMPO[jj][1, :, 2, :] = cp[jj]*ph[jj]*(kron(id, hge) - kron(heg, id))
-        LMPO[jj][1, :, 3, :] = cp[jj]*ph[jj]*(kron(hge, id))
-        LMPO[jj][1, :, 4, :] = cp[jj]'*ph[jj]'*(kron(id, hge))
-        LMPO[jj][1, :, 5, :] = cp[jj]'*ph[jj]'*(kron(hge, id) - kron(id, heg))
+        LMPO[jj][1, :, 2, :] = cp[jj] * ph[jj] * (kron(id, hge) - kron(heg, id))
+        LMPO[jj][1, :, 3, :] = cp[jj] * ph[jj] * (kron(hge, id))
+        LMPO[jj][1, :, 4, :] = cp[jj]' * ph[jj]' * (kron(id, hge))
+        LMPO[jj][1, :, 5, :] = cp[jj]' * ph[jj]' * (kron(hge, id) - kron(id, heg))
         LMPO[jj][1, :, max_ind, :] = local_l(jj, con, delt, time)
-        LMPO[jj][2, :, max_ind, :] = cp[jj]*kron(hge,id)
-        LMPO[jj][3, :, max_ind, :] = -cp[jj]*(kron(heg, id) - kron(id, hge))
-        LMPO[jj][4, :, max_ind, :] = -cp[jj]'*(kron(id, heg) - kron(hge, id))
-        LMPO[jj][5, :, max_ind, :] = cp[jj]'*kron(id, hge)
+        LMPO[jj][2, :, max_ind, :] = cp[jj] * kron(hge, id)
+        LMPO[jj][3, :, max_ind, :] = -cp[jj] * (kron(heg, id) - kron(id, hge))
+        LMPO[jj][4, :, max_ind, :] = -cp[jj]' * (kron(id, heg) - kron(hge, id))
+        LMPO[jj][5, :, max_ind, :] = cp[jj]' * kron(id, hge)
         LMPO[jj][max_ind, :, max_ind, :] = kron(id, id)
-        LMPO[jj][2, :, 2, :] = ph[jj]*kron(id, id)
-        LMPO[jj][3, :, 3, :] = ph[jj]*kron(id, id)
-        LMPO[jj][4, :, 4, :] = ph[jj]'*kron(id, id)
-        LMPO[jj][5, :, 5, :] = ph[jj]'*kron(id, id)
+        LMPO[jj][2, :, 2, :] = ph[jj] * kron(id, id)
+        LMPO[jj][3, :, 3, :] = ph[jj] * kron(id, id)
+        LMPO[jj][4, :, 4, :] = ph[jj]' * kron(id, id)
+        LMPO[jj][5, :, 5, :] = ph[jj]' * kron(id, id)
         for exp_ind = 1:no_exp
-            LMPO[jj][1, :, 5 + 2*exp_ind - 1, :] = sqrt(-im*delt*uu[exp_ind]*lam[exp_ind])*
-                (kron(hss, id) + kron(hpp, id))
-            LMPO[jj][1, :, 5 + 2*exp_ind, :] = sqrt(im*delt*uu[exp_ind]*lam[exp_ind])*
-                (kron(id, hss) + kron(id, hpp))
-            LMPO[jj][5 + 2*exp_ind - 1, :, max_ind, :] = sqrt(-im*delt*uu[exp_ind]*lam[exp_ind])*
-                (kron(hss, id) + kron(hpp, id))
-            LMPO[jj][5 + 2*exp_ind, :, max_ind, :] = sqrt(im*delt*uu[exp_ind]*lam[exp_ind])*
-                (kron(id, hss) + kron(id, hpp))
-            LMPO[jj][5 + 2*exp_ind - 1, :, 5 + 2*exp_ind - 1, :] = lam[exp_ind]*kron(id, id)
-            LMPO[jj][5 + 2*exp_ind, :, 5 + 2*exp_ind, :] = lam[exp_ind]*kron(id, id)
+            LMPO[jj][1, :, 5+2*exp_ind-1, :] = sqrt(-im * delt * uu[exp_ind] * lam[exp_ind]) *
+                                               (kron(hss, id) + kron(hpp, id))
+            LMPO[jj][1, :, 5+2*exp_ind, :] = sqrt(im * delt * uu[exp_ind] * lam[exp_ind]) *
+                                             (kron(id, hss) + kron(id, hpp))
+            LMPO[jj][5+2*exp_ind-1, :, max_ind, :] = sqrt(-im * delt * uu[exp_ind] * lam[exp_ind]) *
+                                                     (kron(hss, id) + kron(hpp, id))
+            LMPO[jj][5+2*exp_ind, :, max_ind, :] = sqrt(im * delt * uu[exp_ind] * lam[exp_ind]) *
+                                                   (kron(id, hss) + kron(id, hpp))
+            LMPO[jj][5+2*exp_ind-1, :, 5+2*exp_ind-1, :] = lam[exp_ind] * kron(id, id)
+            LMPO[jj][5+2*exp_ind, :, 5+2*exp_ind, :] = lam[exp_ind] * kron(id, id)
         end
     end
 
@@ -348,36 +348,36 @@ end
 function update_L_Ryd!(LMPO, con, delt, time)
 
     no_exp = length(lam)
-    max_ind = 6 + 2*no_exp
-    LMPO[1][1,:,max_ind,:] = local_l(1, con, delt, time)
-    LMPO[na][1,:,1,:] = local_l(na, con, delt, time)
+    max_ind = 6 + 2 * no_exp
+    LMPO[1][1, :, max_ind, :] = local_l(1, con, delt, time)
+    LMPO[na][1, :, 1, :] = local_l(na, con, delt, time)
     for jj = 2:na-1
-        LMPO[jj][1,:,max_ind,:] = local_l(jj, con, delt, time)
+        LMPO[jj][1, :, max_ind, :] = local_l(jj, con, delt, time)
     end
 
 end
 
 function local_l(jj, con, delt, time)
 
-    con/na*kron(id, id) + delt*(
-        (im*del_p - (gam_eg + gam_1d[jj] + gam_ee)/2)*kron(hee, id) -
-        (im*del_p + (gam_eg + gam_1d[jj] + gam_ee)/2)*kron(id, hee) +
-        (im*del_s - gam_ss/2 - gam_sp/2)*kron(hss, id) -
-        (im*del_s + gam_ss/2 + gam_sp/2)*kron(id, hss) +
-        (-gam_gg/2)*kron(hgg, id) -
-        (+gam_gg/2)*kron(id, hgg) +
-        (-gam_pg/2)*kron(hpp, id) -
-        (+gam_pg/2)*kron(id, hpp) +
-        gam_gg*kron(hgg, hgg) +
-        gam_ss*kron(hss, hss) +
-        gam_ee*kron(hee, hee) +
-        gam_sp*kron(hps, hps) +
-        gam_pg*kron(hgp, hgp) +
-        (gam_eg + gam_1d[jj])*kron(hge, hge) + 
-        im*f(time)*sqrt(gam_1d[jj]/2)*exp(im*k_in*rj[jj])*(kron(heg, id) - kron(id, hge)) +
-        im*f(time)*sqrt(gam_1d[jj]/2)*exp(-im*k_in*rj[jj])*(kron(hge, id) - kron(id, heg)) +
-        im*om*exp(im*k_c*rj[jj])*(kron(hse, id) - kron(id, hes)) +
-        im*om*exp(-im*k_c*rj[jj])*(kron(hes, id) - kron(id, hse)))
+    con / na * kron(id, id) + delt * (
+        (im * del_p - (gam_eg + gam_1d[jj] + gam_ee) / 2) * kron(hee, id) -
+        (im * del_p + (gam_eg + gam_1d[jj] + gam_ee) / 2) * kron(id, hee) +
+        (im * del_s - gam_ss / 2 - gam_sp / 2) * kron(hss, id) -
+        (im * del_s + gam_ss / 2 + gam_sp / 2) * kron(id, hss) +
+        (-gam_gg / 2) * kron(hgg, id) -
+        (+gam_gg / 2) * kron(id, hgg) +
+        (-gam_pg / 2) * kron(hpp, id) -
+        (+gam_pg / 2) * kron(id, hpp) +
+        gam_gg * kron(hgg, hgg) +
+        gam_ss * kron(hss, hss) +
+        gam_ee * kron(hee, hee) +
+        gam_sp * kron(hps, hps) +
+        gam_pg * kron(hgp, hgp) +
+        (gam_eg + gam_1d[jj]) * kron(hge, hge) +
+        im * f(time) * sqrt(gam_1d[jj] / 2) * exp(im * k_in * rj[jj]) * (kron(heg, id) - kron(id, hge)) +
+        im * f(time) * sqrt(gam_1d[jj] / 2) * exp(-im * k_in * rj[jj]) * (kron(hge, id) - kron(id, heg)) +
+        im * om * exp(im * k_c * rj[jj]) * (kron(hse, id) - kron(id, hes)) +
+        im * om * exp(-im * k_c * rj[jj]) * (kron(hes, id) - kron(id, hse)))
 
 end
 
