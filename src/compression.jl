@@ -24,11 +24,11 @@ function compress_var(Ain, A, maxsweeps)
 
     #initializing left environment
 
-    FL[1] = eye(1)
+    FL[1] = Matrix{Float64}(I, 1, 1)
     for jj = 1:(na-1)
         FL[jj+1] = update_lenv(Ain[jj], A[jj], FL[jj])
     end
-    FR[na] = eye(1)
+    FR[na] = Matrix{Float64}(I, 1, 1)
 
     for sweep = 1:maxsweeps
 
@@ -114,15 +114,15 @@ function compress_var_two_site(Ain, A, maxsweeps, svd_tol, dims, dlim)
 
     #initializing left environment
 
-    FL[1] = eye(1)
+    FL[1] = Matrix{Float64}(I, 1, 1)
     for jj = 1:na-1
         FL[jj+1] = update_lenv(Ain[jj], A[jj], FL[jj])
     end
-    FR[na] = eye(1)
+    FR[na] = Matrix{Float64}(I, 1, 1)
 
     for sweep = 1:maxsweeps
 
-        U, S, Vd = eye(1), eye(1), eye(1)
+        U, S, Vd = Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1)
         #sweep left
 
         for jj = na:-1:2
@@ -365,7 +365,7 @@ function compress_var_apply_H_two_site(Ain, A, H, maxsweeps, svd_tol, dims, dlim
 
     for sweep = 1:maxsweeps
 
-        U, S, Vd = eye(1), eye(1), eye(1)
+        U, S, Vd = Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1)
         #sweep left
 
         for jj = na:-1:2
@@ -421,7 +421,7 @@ function compress_var_apply_H_two_site_left(Ain, A, H, maxsweeps, svd_tol, dims,
     end
     FR[na] = ones(1, 1, 1)
 
-    U, S, Vd = eye(1), eye(1), eye(1)
+    U, S, Vd = Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1)
     #sweep left
 
     for jj = na:-1:2
@@ -458,7 +458,7 @@ function compress_var_apply_H_two_site_right(Ain, A, H, maxsweeps, svd_tol, dims
     end
     FL[1] = ones(1, 1, 1)
 
-    U, S, Vd = eye(1), eye(1), eye(1)
+    U, S, Vd = Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1)
 
     #sweep right
 
@@ -502,12 +502,12 @@ function compress_sum_var(Ain, coef, A, maxsweeps)
     for ll = 1:numv
         #A[ll][na] = coef[ll]*Av[ll][na]
         FL[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FL[ll][1] = eye(1)
+        FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:(na-1)
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
         FR[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FR[ll][na] = coef[ll] * eye(1)
+        FR[ll][na] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 
     for sweep = 1:maxsweeps
@@ -579,18 +579,18 @@ function compress_sum_var_two_site(Ain, coef, A, maxsweeps, svd_tol, dims, dlim)
 
         #A[ll][na] = coef[ll]*Av[ll][na]
         FL[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FL[ll][1] = eye(1)
+        FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:na-2
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
         FR[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FR[ll][na] = coef[ll] * eye(1)
+        FR[ll][na] = coef[ll] * Matrix{Float64}(I, 1, 1)
 
     end
 
     for sweep = 1:maxsweeps
 
-        U, S, Vd = eye(1), eye(1), eye(1)
+        U, S, Vd = Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1)
         #sweep left
 
         for jj = na:-1:2
@@ -663,12 +663,12 @@ function compress_sum_var_apply_H(Ain, coef, A, H, maxsweeps)
     for ll = 1:(numv-1)
         #A[ll][na] = coef[ll]*Av[ll][na]
         FL[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FL[ll][1] = eye(1)
+        FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:(na-1)
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
         FR[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FR[ll][na] = coef[ll] * eye(1)
+        FR[ll][na] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 
     FLH[1] = ones(1, 1, 1)
@@ -747,11 +747,11 @@ function compress_sum_var_apply_H_left(Ain, coef, A, H)
     for ll = 1:(numv-1)
         #A[ll][na] = coef[ll]*Av[ll][na]
         FL[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FL[ll][1] = eye(1)
+        FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:(na-1)
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
-        FR[ll] = coef[ll] * eye(1)
+        FR[ll] = coef[ll] * Matrix{Float64}(I, 1, 1)
 
     end
 
@@ -950,11 +950,11 @@ function compress_sum_var_apply_H_right(Ain, coef, A, H)
 
     for ll = 1:(numv-1)
         FR[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FR[ll][na] = eye(1)
+        FR[ll][na] = Matrix{Float64}(I, 1, 1)
         for jj = na:-1:2
             FR[ll][jj-1] = update_renv(Ain[jj], A[ll][jj], FR[ll][jj])
         end
-        FL[ll] = coef[ll] * eye(1)
+        FL[ll] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 
     FRH[na] = ones(1, 1, 1)
@@ -1076,12 +1076,12 @@ function compress_sum_var_apply_H_two_site(Ain, coef, A, H, maxsweeps, svd_tol, 
     for ll = 1:numv-1
         #A[ll][na] = coef[ll]*Av[ll][na]
         FL[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FL[ll][1] = eye(1)
+        FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:na-2
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
         FR[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FR[ll][na] = coef[ll] * eye(1)
+        FR[ll][na] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 
     FLH[1] = ones(1, 1, 1)
@@ -1092,7 +1092,7 @@ function compress_sum_var_apply_H_two_site(Ain, coef, A, H, maxsweeps, svd_tol, 
 
     for sweep = 1:maxsweeps
 
-        U, S, Vd = eye(1), eye(1), eye(1)
+        U, S, Vd = Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1)
         #sweep left
 
         for jj = na:-1:2
@@ -1163,12 +1163,12 @@ function compress_sum_var_apply_H_two_site_left(Ain, coef, A, H, maxsweeps, svd_
     for ll = 1:numv-1
         #A[ll][na] = coef[ll]*Av[ll][na]
         FL[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FL[ll][1] = eye(1)
+        FL[ll][1] = Matrix{Float64}(I, 1, 1)
         for jj = 1:na-2
             FL[ll][jj+1] = update_lenv(Ain[jj], A[ll][jj], FL[ll][jj])
         end
         FR[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FR[ll][na] = coef[ll] * eye(1)
+        FR[ll][na] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 
     FLH[1] = ones(1, 1, 1)
@@ -1177,7 +1177,7 @@ function compress_sum_var_apply_H_two_site_left(Ain, coef, A, H, maxsweeps, svd_
     end
     FRH[na] = coef[numv] * ones(1, 1, 1)
 
-    U, S, Vd = eye(1), eye(1), eye(1)
+    U, S, Vd = Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1)
     #sweep left
 
     for jj = na:-1:2
@@ -1221,12 +1221,12 @@ function compress_sum_var_apply_H_two_site_right(Ain, coef, A, H, maxsweeps, svd
 
     for ll = 1:numv-1
         FR[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FR[ll][na] = eye(1)
+        FR[ll][na] = Matrix{Float64}(I, 1, 1)
         for jj = na:-1:2
             FR[ll][jj-1] = update_renv(Ain[jj], A[ll][jj], FR[ll][jj])
         end
         FL[ll] = Array{Array{Complex{Float64},2},1}(na)
-        FL[ll][1] = coef[ll] * eye(1)
+        FL[ll][1] = coef[ll] * Matrix{Float64}(I, 1, 1)
     end
 
     FLH[1] = coef[numv] * ones(1, 1, 1)
@@ -1235,7 +1235,7 @@ function compress_sum_var_apply_H_two_site_right(Ain, coef, A, H, maxsweeps, svd
         FRH[jj-1] = update_re(Ain[jj], H[jj], A[numv][jj], FRH[jj])
     end
 
-    U, S, Vd = eye(1), eye(1), eye(1)
+    U, S, Vd = Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1), Matrix{Float64}(I, 1, 1)
     #sweep right
 
     for jj = 1:na-1
