@@ -5,8 +5,8 @@ numv Krylov space vectors
 """
 function Arnoldi_expm(A, v, numv)
 
-    rhov = Vector{Vector{Array{Complex{Float64},3}}}(undef, numv)
-    vprod = Vector{Vector{Array{Complex{Float64},3}}}(undef, numv)
+    rhov = Vector{Vector{Array{ComplexF64,3}}}(undef, numv)
+    vprod = Vector{Vector{Array{ComplexF64,3}}}(undef, numv)
     N = complex(zeros(numv, numv))
     H = complex(zeros(numv, numv))
 
@@ -46,8 +46,8 @@ end
 
 function Arnoldi_expm_norm(A, v, numv)
 
-    rhov = Vector{Vector{Array{Complex{Float64},3}}}(undef, numv)
-    vprod = Vector{Vector{Array{Complex{Float64},3}}}(undef, numv)
+    rhov = Vector{Vector{Array{ComplexF64,3}}}(undef, numv)
+    vprod = Vector{Vector{Array{ComplexF64,3}}}(undef, numv)
     N = complex(Matrix{Float64}(I, numv, numv))
     H = complex(zeros(numv, numv))
 

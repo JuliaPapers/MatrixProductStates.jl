@@ -6,8 +6,8 @@ function ground_state_search_full(A, H, maxsweeps)
 
     na = length(A)
     At = deepcopy(A)
-    FL = Vector{Array{Complex{Float64},3}}(undef, na)
-    FR = Vector{Array{Complex{Float64},3}}(undef, na)
+    FL = Vector{Array{ComplexF64,3}}(undef, na)
+    FR = Vector{Array{ComplexF64,3}}(undef, na)
 
     FL[1] = ones(1, 1, 1)
     for jj = 1:na-1
@@ -65,8 +65,8 @@ canonical form (normalisation not necessary). Matrix as linear map.
 function ground_state_search!(At, H, maxsweeps, converge_rat, eigs_tol)
 
     na = length(At)
-    FL = Vector{Array{Complex{Float64},3}}(undef, na)
-    FR = Vector{Array{Complex{Float64},3}}(undef, na)
+    FL = Vector{Array{ComplexF64,3}}(undef, na)
+    FR = Vector{Array{ComplexF64,3}}(undef, na)
     ae = 0.0
     aestart = 0.0
 

@@ -119,7 +119,7 @@ const hse = hes'
 const id = Matrix{Float64}(I, 3, 3)
 
 # types used in mps representation
-const TN = Complex{Float64}
+const TN = ComplexF64
 const TA = Array
 
 

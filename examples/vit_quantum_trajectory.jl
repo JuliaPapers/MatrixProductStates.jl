@@ -52,7 +52,7 @@ const a = diagm(sqrt.(1:(d_c-1)), 1)
 const id_c = Matrix{Float64}(I, d_c, d_c)
 
 # types used in mps representation
-const TN = Complex{Float64}
+const TN = ComplexF64
 const TA = Array
 
 function time_evolve()

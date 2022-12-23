@@ -2,7 +2,7 @@
 make product state MPS in left orthonomal form
 """
 mpsproductstate(na, dmax, d, state::Array) =
-    mpsproductstate(Complex{Float64}, Array, na, dmax, d, state)
+    mpsproductstate(ComplexF64, Array, na, dmax, d, state)
 
 function mpsproductstate(::Type{TN}, ::Type{TA}, na, dmax, d, state::Array) where {TN,TA}
 
@@ -31,7 +31,7 @@ function mpsproductstate(::Type{TN}, ::Type{TA}, na, dmax, d, state::Array) wher
 end
 
 mpsproductstate(na, dmax, d, state::Function) =
-    mpsproductstate(Complex{Float64}, Array, na, dmax, d, state)
+    mpsproductstate(ComplexF64, Array, na, dmax, d, state)
 
 function mpsproductstate(::Type{TN}, ::Type{TA}, na, dmax, d, state::Function) where {TN,TA}
 
@@ -62,7 +62,7 @@ end
 """
 make groundstate MPS in left orthonomal form (also has trace 1 for density matrix)
 """
-mpsgroundstate(na, dmax, d) = mpsgroundstate(Complex{Float64}, Array, na, dmax, d)
+mpsgroundstate(na, dmax, d) = mpsgroundstate(ComplexF64, Array, na, dmax, d)
 
 function mpsgroundstate(::Type{TN}, ::Type{TA}, na, dmax, d) where {TN,TA}
 
@@ -74,7 +74,7 @@ end
 
 
 mpsgroundstate(na, dmax, d::Array) =
-    mpsgroundstate(Complex{Float64}, Array, na, dmax, d)
+    mpsgroundstate(ComplexF64, Array, na, dmax, d)
 
 function mpsgroundstate(::Type{TN}, ::Type{TA}, na, dmax, d::Array) where {TN,TA}
 
@@ -105,7 +105,7 @@ end
 """
 make random left orthonormalized MPS
 """
-mpsrandom(na, dmax, d) = mpsrandom(Complex{Float64}, Array, na, dmax, d)
+mpsrandom(na, dmax, d) = mpsrandom(ComplexF64, Array, na, dmax, d)
 
 function mpsrandom(::Type{TN}, ::Type{TA}, na, dmax, d) where {TN,TA}
 
@@ -191,7 +191,7 @@ end
 """
 make MPS operator from input matrix
 """
-makemps(mpsmat, na, d) = makemps(Complex{Float64}, Array, mpsmat, na, d)
+makemps(mpsmat, na, d) = makemps(ComplexF64, Array, mpsmat, na, d)
 
 function makemps(::Type{TN}, ::Type{TA}, mpsmat, na, d) where {TN,TA}
 
@@ -221,7 +221,7 @@ end
 """
 make MPO operator from input matrix (slow, shouldn't be used in loops)
 """
-makempo(mpomat, na, d) = makempo(Complex{Float64}, Array, mpomat, na, d)
+makempo(mpomat, na, d) = makempo(ComplexF64, Array, mpomat, na, d)
 
 function makempo(::Type{TN}, ::Type{TA}, mpomat, na, d) where {TN,TA}
 
@@ -335,7 +335,7 @@ end
 
 
 
-build_env(dims1, dims2, mpo_dims) = build_env(Complex{Float64}, Array, dims1, dims2, mpo_dims)
+build_env(dims1, dims2, mpo_dims) = build_env(ComplexF64, Array, dims1, dims2, mpo_dims)
 
 function build_env(::Type{TN}, ::Type{TA}, dims1, dims2, mpo_dims) where {TN,TA}
 
@@ -351,7 +351,7 @@ function build_env(::Type{TN}, ::Type{TA}, dims1, dims2, mpo_dims) where {TN,TA}
 
 end
 
-build_env(dims1, dims2) = build_env(Complex{Float64}, Array, dims1, dims2)
+build_env(dims1, dims2) = build_env(ComplexF64, Array, dims1, dims2)
 
 function build_env(::Type{TN}, ::Type{TA}, dims1, dims2) where {TN,TA}
 

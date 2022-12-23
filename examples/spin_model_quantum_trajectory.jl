@@ -40,7 +40,7 @@ const heg = hge'
 const id = Matrix{Float64}(I, 2, 2)
 
 # types used in mps representation
-const TN = Complex{Float64}
+const TN = ComplexF64
 const TA = Array
 
 function time_evolve()
