@@ -48,7 +48,7 @@ function Arnoldi_expm_norm(A, v, numv)
 
     rhov = Array{Array{Array{Complex{Float64},3},1},1}(numv)
     vprod = Array{Array{Array{Complex{Float64},3},1},1}(numv)
-    N = complex(eye(numv))
+    N = complex(Matrix{Float64}(I, numv, numv))
     H = complex(zeros(numv, numv))
 
     rhov[1] = deepcopy(v)
@@ -86,7 +86,7 @@ end
 
 function Arnoldi_expm!(A, rhov, numv, env, envop)
 
-    N = complex(eye(numv))
+    N = complex(Matrix{Float64}(I, numv, numv))
     H = complex(zeros(numv, numv))
 
     H[1, 1] = scal_op_prod(rhov[1], A, rhov[1])

@@ -48,7 +48,7 @@ const id = Matrix{Float64}(I, 3, 3)
 # cavity operators
 const anum = diagm(0:(d_c-1))
 const a = diagm(sqrt.(1:(d_c-1)), 1)
-const id_c = eye(d_c)
+const id_c = Matrix{Float64}(I, d_c, d_c)
 
 # types used in mps representation
 const TN = Complex{Float64}
@@ -64,12 +64,12 @@ function time_evolve()
     jumpleft[1:na] = makempo(TN, TA, [jj->id jj->im * sqrt(gam_1d[jj] / 2) * exp(im * k_wg * rj[jj]) * hge
             jj->0 jj->id], na, d)
     jumpleft[na+1] = zeros(TN, 1, d_c, 1, d_c)
-    jumpleft[na+1][1, :, 1, :] = eye(TN, d_c)
+    jumpleft[na+1][1, :, 1, :] = Matrix{TN}(I, d_c, d_c)
     jumpright = Array{TA{TN,4},1}(na + 1)
     jumpright[1:na] = makempo(TN, TA, [jj->id jj->im * sqrt(gam_1d[jj] / 2) * exp(-im * k_wg * rj[jj]) * hge
             jj->0 jj->id], na, d)
     jumpright[na+1] = zeros(TN, 1, d_c, 1, d_c)
-    jumpright[na+1][1, :, 1, :] = eye(TN, d_c)
+    jumpright[na+1][1, :, 1, :] = Matrix{TN}(I, d_c, d_c)
     jumpright[1][1, :, 2, :] = f(0.0) * id + im * sqrt(gam_1d[1] / 2) * exp(-im * k_wg * rj[1]) * hge
     ir_mpo = applyMPOtoMPO(jumpright, conj_mpo(jumpright))
     ir2_mpo = applyMPOtoMPO(applyMPOtoMPO(jumpright, ir_mpo), conj_mpo(jumpright))
