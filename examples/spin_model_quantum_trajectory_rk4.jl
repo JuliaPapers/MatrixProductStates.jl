@@ -5,6 +5,7 @@
 using MAT
 using MatrixProductStates
 using LinearAlgebra
+using Random  # srand
 BLAS.set_num_threads(2)
 
 # spin model parameters
