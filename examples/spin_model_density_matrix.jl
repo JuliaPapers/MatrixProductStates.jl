@@ -30,7 +30,7 @@ const hgg = [1 0; 0 0]
 const hge = [0 1; 0 0]
 const heg = hge'
 const hee = [0 0; 0 1]
-const id = eye(2)
+const id = Matrix{Float64}(I, 2, 2)
 const TN = Complex{Float64}
 const TA = Array
 

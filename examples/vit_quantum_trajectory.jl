@@ -44,7 +44,7 @@ const hge = [0 1 0; 0 0 0; 0 0 0]
 const heg = hge'
 const hes = [0 0 0; 0 0 1; 0 0 0]
 const hse = hes'
-const id = eye(3)
+const id = Matrix{Float64}(I, 3, 3)
 # cavity operators
 const anum = diagm(0:(d_c-1))
 const a = diagm(sqrt.(1:(d_c-1)), 1)

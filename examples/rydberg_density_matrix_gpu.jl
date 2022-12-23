@@ -119,7 +119,7 @@ const hge = [0 1 0; 0 0 0; 0 0 0]
 const heg = hge'
 const hes = [0 0 0; 0 0 1; 0 0 0]
 const hse = hes'
-const id = eye(3)
+const id = Matrix{Float64}(I, 3, 3)
 
 # types used in mps representation
 const TN = Complex{Float32}

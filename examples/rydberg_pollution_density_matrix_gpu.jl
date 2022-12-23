@@ -126,7 +126,7 @@ const heg = hge'
 const hse = hes'
 const hps = hsp'
 const hpg = hgp'
-const id = eye(4)
+const id = Matrix{Float64}(I, 4, 4)
 
 # types used in mps representation
 const TN = Complex{Float32}
